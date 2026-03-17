@@ -31,7 +31,7 @@ import androidx.navigation.NavHostController
                 color = Color.White
             )
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate("menu") },
                 colors = ButtonDefaults.buttonColors(Color.White),
                 modifier = Modifier.align(Alignment.Center)
             ) {
