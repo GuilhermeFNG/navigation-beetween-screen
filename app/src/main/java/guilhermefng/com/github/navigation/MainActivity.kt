@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import guilhermefng.com.github.navigation.screens.LoginScreen
 import guilhermefng.com.github.navigation.screens.MenuScreen
 import guilhermefng.com.github.navigation.screens.PedidosScreen
@@ -36,9 +37,13 @@ class MainActivity : ComponentActivity() {
                         composable(route = "menu") {
                             MenuScreen(modifier = Modifier.padding(innerPadding), navController)
                         }
-                        composable(route = "pedidos") {
-                            PedidosScreen(modifier = Modifier.padding(innerPadding), navController)
-                        }
+                        composable(
+                            route = "pedidos?cliente={cliente}",
+                            arguments = listOf(navArgument("cliente") {
+                                defaultValue = "Cliente Genérico"
+                            })
+                        ) {
+                            PedidosScreen(modifier = Modifier.padding(innerPadding), navController, it.arguments?.getString("cliente"))
                         composable(route = "perfil/{nome}") {
                             val nome: String? = it.arguments?.getString("nome", "Usuário Genérico")
                             PerfilScreen(
