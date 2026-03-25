@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.NavType
 import guilhermefng.com.github.navigation.screens.LoginScreen
 import guilhermefng.com.github.navigation.screens.MenuScreen
 import guilhermefng.com.github.navigation.screens.PedidosScreen
@@ -43,13 +44,25 @@ class MainActivity : ComponentActivity() {
                                 defaultValue = "Cliente Genérico"
                             })
                         ) {
-                            PedidosScreen(modifier = Modifier.padding(innerPadding), navController, it.arguments?.getString("cliente"))
-                        composable(route = "perfil/{nome}") {
+                            PedidosScreen(
+                                modifier = Modifier.padding(innerPadding),
+                                navController,
+                                it.arguments?.getString("cliente")
+                            )
+                        composable(
+                            route = "perfil/{nome}/{idade}",
+                            arguments = listOf(
+                                navArgument("nome") { type = NavType.StringType },
+                                navArgument("idade") { type = NavType.IntType }
+                            )
+                        ) {
                             val nome: String? = it.arguments?.getString("nome", "Usuário Genérico")
+                            val idade: Int? = it.arguments?.getInt("idade", 0)
                             PerfilScreen(
                                 modifier = Modifier.padding(innerPadding),
                                 navController,
-                                nome!!
+                                nome!!,
+                                idade!!
                             )
                         }
                     }
